@@ -3,8 +3,6 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -19,36 +17,35 @@ import { bgGradient } from 'src/theme/css';
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
-
-export default function LoginView() {
+export default function RegisterView() {
   const theme = useTheme();
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/api/users/login', {
+      const response = await fetch('http://localhost:8080/api/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ name, email, mobile, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('token', data.token);
-        router.push('/');
+        router.push('/login');
       } else {
         // Handle error (e.g., show error message)
-        console.error('Login failed:', data.message);
+        console.error('Registration failed:', data.message);
       }
     } catch (error) {
       console.error('An error occurred:', error);
@@ -61,10 +58,24 @@ export default function LoginView() {
     <>
       <Stack spacing={3}>
         <TextField
+          name="name"
+          label="Full Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <TextField
           name="email"
           label="Email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <TextField
+          name="mobile"
+          label="Mobile Number"
+          value={mobile}
+          onChange={(e) => setMobile(e.target.value)}
         />
 
         <TextField
@@ -85,8 +96,6 @@ export default function LoginView() {
         />
       </Stack>
 
-      <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ my: 3 }} />
-
       <LoadingButton
         fullWidth
         size="large"
@@ -95,8 +104,9 @@ export default function LoginView() {
         color="inherit"
         onClick={handleClick}
         loading={loading}
+        sx={{ mt: 3 }}
       >
-        Login
+        Register
       </LoadingButton>
     </>
   );
@@ -127,15 +137,14 @@ export default function LoginView() {
             maxWidth: 420,
           }}
         >
-          <Typography variant="h4">Sign In</Typography>
+          <Typography variant="h4">Sign Up</Typography>
 
           <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
-            Don’t have an account?
-            <Link variant="subtitle2" sx={{ ml: 0.5 }} onClick={() => router.push('/register')}>
-              Get started
+            Already have an account?
+            <Link variant="subtitle2" sx={{ ml: 0.5 }} onClick={() => router.push('/login')}>
+              Login
             </Link>
           </Typography>
-
           {renderForm}
         </Card>
       </Stack>
