@@ -28,7 +28,7 @@ export default function ProductsView() {
   return (
     <Container>
       <Typography variant="h4" sx={{ mb: 5 }}>
-        Products
+        Courses To start Off your Trading
       </Typography>
 
       <Stack
@@ -51,7 +51,7 @@ export default function ProductsView() {
 
       <Grid container spacing={3}>
         {products.map((product) => (
-          <Grid key={product.id} xs={12} sm={6} md={3}>
+          <Grid key={product.id} xs={12} sm={6} md={4}>
             <ProductCard product={product} />
           </Grid>
         ))}

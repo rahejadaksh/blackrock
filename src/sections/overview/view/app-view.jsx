@@ -10,11 +10,11 @@ import AppTasks from '../app-tasks';
 import AppNewsUpdate from '../app-news-update';
 import AppOrderTimeline from '../app-order-timeline';
 import AppCurrentVisits from '../app-current-visits';
-import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
 import AppTrafficBySite from '../app-traffic-by-site';
 import AppCurrentSubject from '../app-current-subject';
 import AppConversionRates from '../app-conversion-rates';
+import AppMarketTrends from '../app-website-visits';
 
 // ----------------------------------------------------------------------
 
@@ -28,8 +28,8 @@ export default function AppView() {
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Weekly Sales"
-            total={714000}
+            title="Top Performer"
+            total="Bajaj Finance"
             color="success"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
           />
@@ -37,7 +37,7 @@ export default function AppView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="New Users"
+            title="Weekly Volume"
             total={1352831}
             color="info"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
@@ -46,8 +46,8 @@ export default function AppView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Item Orders"
-            total={1723315}
+            title="Trading Volume"
+            total={4502}
             color="warning"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_buy.png" />}
           />
@@ -55,49 +55,43 @@ export default function AppView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Bug Reports"
-            total={234}
+            title="Trade Alerts"
+            total={24}
             color="error"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />}
           />
         </Grid>
 
         <Grid xs={12} md={6} lg={8}>
-          <AppWebsiteVisits
-            title="Website Visits"
-            subheader="(+43%) than last year"
+          <AppMarketTrends
+            title="Market Trends"
+            subheader="(+10%) from last month"
             chart={{
               labels: [
-                '01/01/2003',
-                '02/01/2003',
-                '03/01/2003',
-                '04/01/2003',
-                '05/01/2003',
-                '06/01/2003',
-                '07/01/2003',
-                '08/01/2003',
-                '09/01/2003',
-                '10/01/2003',
-                '11/01/2003',
+                '01/01/2023',
+                '02/01/2023',
+                '03/01/2023',
+                '04/01/2023',
+                '05/01/2023',
+                '06/01/2023',
+                '07/01/2023',
+                '08/01/2023',
+                '09/01/2023',
+                '10/01/2023',
+                '11/01/2023',
               ],
               series: [
                 {
-                  name: 'Team A',
-                  type: 'column',
-                  fill: 'solid',
-                  data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
-                },
-                {
-                  name: 'Team B',
-                  type: 'area',
-                  fill: 'gradient',
-                  data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
-                },
-                {
-                  name: 'Team C',
+                  name: 'S&P 500',
                   type: 'line',
                   fill: 'solid',
-                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+                  data: [3750, 3800, 3850, 3900, 3950, 4000, 4050, 4100, 4150, 4200, 4250],
+                },
+                {
+                  name: 'NASDAQ',
+                  type: 'area',
+                  fill: 'gradient',
+                  data: [13000, 13100, 13200, 13300, 13400, 13500, 13600, 13700, 13800, 13900, 14000],
                 },
               ],
             }}
@@ -120,23 +114,24 @@ export default function AppView() {
 
         <Grid xs={12} md={6} lg={8}>
           <AppConversionRates
-            title="Conversion Rates"
+            title="Stock Performance"
             subheader="(+43%) than last year"
             chart={{
               series: [
-                { label: 'Italy', value: 400 },
-                { label: 'Japan', value: 430 },
-                { label: 'China', value: 448 },
-                { label: 'Canada', value: 470 },
-                { label: 'France', value: 540 },
-                { label: 'Germany', value: 580 },
-                { label: 'South Korea', value: 690 },
-                { label: 'Netherlands', value: 1100 },
-                { label: 'United States', value: 1200 },
-                { label: 'United Kingdom', value: 1380 },
+                { label: 'Apple (AAPL)', value: 400 },
+                { label: 'Microsoft (MSFT)', value: 430 },
+                { label: 'Amazon (AMZN)', value: 448 },
+                { label: 'Google (GOOGL)', value: 470 },
+                { label: 'Facebook (META)', value: 540 },
+                { label: 'Tesla (TSLA)', value: 580 },
+                { label: 'Netflix (NFLX)', value: 690 },
+                { label: 'NVIDIA (NVDA)', value: 1100 },
+                { label: 'Adobe (ADBE)', value: 1200 },
+                { label: 'Salesforce (CRM)', value: 1380 },
               ],
             }}
           />
+
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
@@ -226,5 +221,6 @@ export default function AppView() {
         </Grid>
       </Grid>
     </Container>
+
   );
 }

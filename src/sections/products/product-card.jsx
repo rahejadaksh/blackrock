@@ -1,17 +1,38 @@
 import PropTypes from 'prop-types';
-
+import { Link as RouterLink } from 'react-router-dom'; // Assuming you're using react-router
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { fCurrency } from 'src/utils/format-number';
-
 import Label from 'src/components/label';
-import { ColorPreview } from 'src/components/color-utils';
 
 // ----------------------------------------------------------------------
+
+const StarRating = ({ rating }) => (
+  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    {[...Array(Math.floor(rating))].map((_, index) => (
+      <Typography key={index} sx={{ fontSize: 20, color: 'gold' }}>
+        ★
+      </Typography>
+    ))}
+    {rating % 1 !== 0 && (
+      <Typography sx={{ fontSize: 20, color: 'gold' }}>
+        ★
+      </Typography>
+    )}
+    {[...Array(5 - Math.ceil(rating))].map((_, index) => (
+      <Typography key={index + Math.floor(rating)} sx={{ fontSize: 20, color: 'grey' }}>
+        ☆
+      </Typography>
+    ))}
+  </Box>
+);
+
+StarRating.propTypes = {
+  rating: PropTypes.number.isRequired,
+};
 
 export default function ShopProductCard({ product }) {
   const renderStatus = (
@@ -45,28 +66,10 @@ export default function ShopProductCard({ product }) {
     />
   );
 
-  const renderPrice = (
-    <Typography variant="subtitle1">
-      <Typography
-        component="span"
-        variant="body1"
-        sx={{
-          color: 'text.disabled',
-          textDecoration: 'line-through',
-        }}
-      >
-        {product.priceSale && fCurrency(product.priceSale)}
-      </Typography>
-      &nbsp;
-      {fCurrency(product.price)}
-    </Typography>
-  );
-
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {product.status && renderStatus}
-
+        {/* {product.status && renderStatus} */}
         {renderImg}
       </Box>
 
@@ -76,8 +79,17 @@ export default function ShopProductCard({ product }) {
         </Link>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={product.colors} />
-          {renderPrice}
+          <StarRating rating={product.rating} />
+          {/* Static "See More" Link */}
+          <RouterLink to="/see-more">
+            <Link
+              sx={{ textDecoration: 'none', color: 'blue', cursor: 'pointer' }}
+            >
+              <Typography variant="body2" sx={{ ml: 2 }}>
+                See More
+              </Typography>
+            </Link>
+          </RouterLink>
         </Stack>
       </Stack>
     </Card>
@@ -85,5 +97,11 @@ export default function ShopProductCard({ product }) {
 }
 
 ShopProductCard.propTypes = {
-  product: PropTypes.object,
+  product: PropTypes.shape({
+    id: PropTypes.string,
+    cover: PropTypes.string,
+    name: PropTypes.string,
+    rating: PropTypes.number,
+    status: PropTypes.string,
+  }).isRequired,
 };

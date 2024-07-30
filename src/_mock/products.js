@@ -3,41 +3,32 @@ import { faker } from '@faker-js/faker';
 
 // ----------------------------------------------------------------------
 
-const PRODUCT_NAME = [
-  'Nike Air Force 1 NDESTRUKT',
-  'Nike Space Hippie 04',
-  'Nike Air Zoom Pegasus 37 A.I.R. Chaz Bear',
-  'Nike Blazer Low 77 Vintage',
-  'Nike ZoomX SuperRep Surge',
-  'Zoom Freak 2',
-  'Nike Air Max Zephyr',
-  'Jordan Delta',
-  'Air Jordan XXXV PF',
-  'Nike Waffle Racer Crater',
-  'Kyrie 7 EP Sisterhood',
-  'Nike Air Zoom BB NXT',
-  'Nike Air Force 1 07 LX',
-  'Nike Air Force 1 Shadow SE',
-  'Nike Air Zoom Tempo NEXT%',
-  'Nike DBreak-Type',
-  'Nike Air Max Up',
-  'Nike Air Max 270 React ENG',
-  'NikeCourt Royale',
-  'Nike Air Zoom Pegasus 37 Premium',
-  'Nike Air Zoom SuperRep',
-  'NikeCourt Royale',
-  'Nike React Art3mis',
-  'Nike React Infinity Run Flyknit A.I.R. Chaz Bear',
-];
-const PRODUCT_COLOR = [
-  '#00AB55',
-  '#000000',
-  '#FFFFFF',
-  '#FFC0CB',
-  '#FF4842',
-  '#1890FF',
-  '#94D82D',
-  '#FFC107',
+const COURSE_NAME = [
+  'Introduction to Financial Markets',
+  'Fundamentals of Stock Trading',
+  'Advanced Technical Analysis',
+  'Financial Statement Analysis',
+  'Principles of Corporate Finance',
+  'Equity Valuation Techniques',
+  'Investment Strategies and Portfolio Management',
+  'Understanding Derivatives and Futures',
+  'Risk Management in Finance',
+  'Behavioral Finance and Market Psychology',
+  'Cryptocurrency and Blockchain Fundamentals',
+  'Fixed Income Securities Analysis',
+  'Advanced Trading Strategies',
+  'Mergers and Acquisitions',
+  'Financial Modeling and Forecasting',
+  'Global Economic Trends and Impacts',
+  'Financial Planning and Wealth Management',
+  'Private Equity and Venture Capital',
+  'Ethical and Regulatory Issues in Finance',
+  'Quantitative Finance and Algorithmic Trading',
+  'Hedge Fund Strategies and Management',
+  'Corporate Governance and Ethics',
+  'Financial Technology Innovations',
+  'Real Estate Investment Analysis',
+  'Alternative Investments and Asset Allocation',
 ];
 
 // ----------------------------------------------------------------------
@@ -47,18 +38,9 @@ export const products = [...Array(24)].map((_, index) => {
 
   return {
     id: faker.string.uuid(),
-    cover: `/assets/images/products/product_${setIndex}.jpg`,
-    name: PRODUCT_NAME[index],
-    price: faker.number.int({ min: 4, max: 99, precision: 0.01 }),
-    priceSale: setIndex % 3 ? null : faker.number.int({ min: 19, max: 29, precision: 0.01 }),
-    colors:
-      (setIndex === 1 && PRODUCT_COLOR.slice(0, 2)) ||
-      (setIndex === 2 && PRODUCT_COLOR.slice(1, 3)) ||
-      (setIndex === 3 && PRODUCT_COLOR.slice(2, 4)) ||
-      (setIndex === 4 && PRODUCT_COLOR.slice(3, 6)) ||
-      (setIndex === 23 && PRODUCT_COLOR.slice(4, 6)) ||
-      (setIndex === 24 && PRODUCT_COLOR.slice(5, 6)) ||
-      PRODUCT_COLOR,
+    cover: `/assets/images/products/product_${setIndex}.jpg`, // Adjust path if needed
+    name: COURSE_NAME[index],
+    rating: faker.number.float({ min: 1, max: 5, precision: 0.1 }), // Rating between 1 and 5 stars
     status: sample(['sale', 'new', '', '']),
   };
 });
