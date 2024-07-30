@@ -27,18 +27,11 @@ export default function UserTableHead({
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-          />
-        </TableCell>
 
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.align || 'left'}
+            align='center'
             sortDirection={orderBy === headCell.id ? order : false}
             sx={{ width: headCell.width, minWidth: headCell.minWidth }}
           >

@@ -8,6 +8,7 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
+import CircularProgress from '@mui/material/CircularProgress'; // Import CircularProgress
 import { mockStock } from 'src/_mock/mockData';
 
 import Iconify from 'src/components/iconify';
@@ -31,12 +32,44 @@ export default function StockPage() {
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [stocks, setStocks] = useState([mockStock]); // Use mock data
+  const [stocks, setStocks] = useState([]); // Use mock data
+  const [loading, setLoading] = useState(true); // Loading state
 
-  // Simulate fetching data (remove or comment out this useEffect if not needed)
   useEffect(() => {
-    // Simulate an API call with mock data
-    setStocks([mockStock]);
+    const fetchStockRecommendations = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:5000/recommendations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_spending_data: {
+              monthly_income: 5000,
+              monthly_expense: 3000,
+            },
+            user_profile: {
+              investment_horizon: 'long',
+              financial_goals: 'growth',
+              past_investment_experience: 'novice',
+            },
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setStocks(data.top_10_stocks);
+        } else {
+          console.error('Failed to fetch stock recommendations');
+        }
+      } catch (error) {
+        console.error('Error fetching stock recommendations:', error);
+      } finally {
+        setLoading(false); // Set loading to false once data is fetched
+      }
+    };
+
+    fetchStockRecommendations();
   }, []);
 
   const handleSort = (event, id) => {
@@ -99,9 +132,9 @@ export default function StockPage() {
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Stocks</Typography>
 
-        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
+        {/* <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
           New Stock
-        </Button>
+        </Button> */}
       </Stack>
 
       <Card>
@@ -113,47 +146,53 @@ export default function StockPage() {
 
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
-            <Table sx={{ minWidth: 800 }}>
-              <UserTableHead
-                order={order}
-                orderBy={orderBy}
-                rowCount={stocks.length} // Use stocks here
-                numSelected={selected.length}
-                onRequestSort={handleSort}
-                onSelectAllClick={handleSelectAllClick}
-                headLabel={[
-                  { id: 'ticker', label: 'Ticker' },
-                  { id: 'name', label: 'Name' },
-                  { id: 'currentPrice', label: 'Current Price' },
-                  { id: 'trend', label: 'Trend', align: 'center' },
-                  { id: 'recommendationScore', label: 'Recommendation Score' },
-                  { id: '' },
-                ]}
-              />
-              <TableBody>
-                {dataFiltered
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
-                    <StockTableRow
-                      key={row.ticker}
-                      ticker={row.ticker}
-                      name={row.name}
-                      currentPrice={row.analysis.current_price}
-                      trend={row.analysis.trend}
-                      recommendationScore={row.recommendation_score}
-                      selected={selected.indexOf(row.ticker) !== -1}
-                      handleClick={(event) => handleClick(event, row.ticker)}
-                    />
-                  ))}
-
-                <TableEmptyRows
-                  height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, stocks.length)} // Use stocks here
+            {loading ? ( // Show loading icon if loading
+              <Stack alignItems="center" justifyContent="center" height={400}>
+                <CircularProgress />
+              </Stack>
+            ) : (
+              <Table sx={{ minWidth: 800 }}>
+                <UserTableHead
+                  order={order}
+                  orderBy={orderBy}
+                  rowCount={stocks.length} // Use stocks here
+                  numSelected={selected.length}
+                  onRequestSort={handleSort}
+                  onSelectAllClick={handleSelectAllClick}
+                  headLabel={[
+                    { id: 'name', label: 'Name' },
+                    { id: 'current_price', label: 'Price' },
+                    { id: 'trend', label: 'Trend', align: 'center' },
+                    { id: 'score', label: 'Recommendation Score' },
+                    { id: 'esg_score.overall', label: 'ESG Score' },
+                    { id: '' },
+                  ]}
                 />
+                <TableBody>
+                  {dataFiltered
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => (
+                      <StockTableRow
+                        key={row.ticker}
+                        name={row.name}
+                        currentPrice={row.analysis.current_price}
+                        trend={row.analysis.trend}
+                        score={row.score}
+                        esgScore={row.analysis.esg_score.overall}
+                        selected={selected.indexOf(row.ticker) !== -1}
+                        handleClick={(event) => handleClick(event, row.ticker)}
+                      />
+                    ))}
 
-                {notFound && <TableNoData query={filterName} />}
-              </TableBody>
-            </Table>
+                  <TableEmptyRows
+                    height={77}
+                    emptyRows={emptyRows(page, rowsPerPage, stocks.length)} // Use stocks here
+                  />
+
+                  {notFound && <TableNoData query={filterName} />}
+                </TableBody>
+              </Table>
+            )}
           </TableContainer>
         </Scrollbar>
 
