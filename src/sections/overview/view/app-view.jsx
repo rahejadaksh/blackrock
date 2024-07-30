@@ -16,6 +16,8 @@ import AppCurrentSubject from '../app-current-subject';
 import AppConversionRates from '../app-conversion-rates';
 import AppMarketTrends from '../app-website-visits';
 import AppCurrentTrends from '../AppCurrentTrends';
+import NewsContainer from '../NewsContainer';
+import InvestmentChart from '../InvestmentChart';
 
 // ----------------------------------------------------------------------
 
@@ -128,27 +130,6 @@ export default function AppView() {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={8}>
-          <AppConversionRates
-            title="Stock Performance"
-            subheader="(+43%) than last year"
-            chart={{
-              series: [
-                { label: 'Apple (AAPL)', value: 400 },
-                { label: 'Microsoft (MSFT)', value: 430 },
-                { label: 'Amazon (AMZN)', value: 448 },
-                { label: 'Google (GOOGL)', value: 470 },
-                { label: 'Facebook (META)', value: 540 },
-                { label: 'Tesla (TSLA)', value: 580 },
-                { label: 'Netflix (NFLX)', value: 690 },
-                { label: 'NVIDIA (NVDA)', value: 1100 },
-                { label: 'Adobe (ADBE)', value: 1200 },
-                { label: 'Salesforce (CRM)', value: 1380 },
-              ],
-            }}
-          />
-
-        </Grid>
 
         <Grid xs={12} md={6} lg={4}>
           <AppCurrentTrends
@@ -158,29 +139,40 @@ export default function AppView() {
               categories: ['Technology', 'Finance', 'Healthcare', 'Energy', 'Utilities', 'Consumer Goods'],
               series: [
                 { name: 'Q1 2024', data: [70, 90, 60, 80, 55, 65] },
-      { name: 'Q2 2024', data: [82, 47, 92, 33, 74, 51] },
-      { name: 'Q3 2024', data: [59, 75, 48, 67, 88, 34] },
-      { name: 'Q4 2024', data: [21, 98, 43, 57, 79, 66] },
+                { name: 'Q2 2024', data: [82, 47, 92, 33, 74, 51] },
+                { name: 'Q3 2024', data: [59, 75, 48, 67, 88, 34] },
+                { name: 'Q4 2024', data: [21, 98, 43, 57, 79, 66] },
               ],
             }}
           />
+          <Grid xs={12} md={6} lg={8} mt={6}>
+            <AppConversionRates
+              title="Stock Performance"
+              subheader="(+43%) than last year"
+              chart={{
+                series: [
+                  { label: 'Apple (AAPL)', value: 400 },
+                  { label: 'Microsoft (MSFT)', value: 430 },
+                  { label: 'Amazon (AMZN)', value: 448 },
+                  { label: 'Google (GOOGL)', value: 470 },
+                  { label: 'Facebook (META)', value: 540 },
+                  { label: 'Tesla (TSLA)', value: 580 },
+                  { label: 'Netflix (NFLX)', value: 690 },
+                  { label: 'NVIDIA (NVDA)', value: 1100 },
+                  { label: 'Adobe (ADBE)', value: 1200 },
+                  { label: 'Salesforce (CRM)', value: 1380 },
+                ],
+              }}
+            />
+          </Grid>
 
         </Grid>
 
         <Grid xs={12} md={6} lg={8}>
-          <AppNewsUpdate
-            title="News Update"
-            list={[...Array(5)].map((_, index) => ({
-              id: faker.string.uuid(),
-              title: faker.person.jobTitle(),
-              description: faker.commerce.productDescription(),
-              image: `/assets/images/covers/cover_${index + 1}.jpg`,
-              postedAt: faker.date.recent(),
-            }))}
-          />
+          <NewsContainer />
         </Grid>
 
-        <Grid xs={12} md={6} lg={4}>
+        {/* <Grid xs={12} md={6} lg={4}>
           <AppOrderTimeline
             title="Order Timeline"
             list={[...Array(5)].map((_, index) => ({
@@ -196,9 +188,9 @@ export default function AppView() {
               time: faker.date.past(),
             }))}
           />
-        </Grid>
+        </Grid> */}
 
-        <Grid xs={12} md={6} lg={4}>
+        {/* <Grid xs={12} md={6} lg={4}>
           <AppTrafficBySite
             title="Traffic by Site"
             list={[
@@ -224,9 +216,9 @@ export default function AppView() {
               },
             ]}
           />
-        </Grid>
+        </Grid> */}
 
-        <Grid xs={12} md={6} lg={8}>
+        {/* <Grid xs={12} md={6} lg={8}>
           <AppTasks
             title="Tasks"
             list={[
@@ -237,7 +229,9 @@ export default function AppView() {
               { id: '5', name: 'Sprint Showcase' },
             ]}
           />
-        </Grid>
+        </Grid> */}
+        <Grid xs={12} md={6} lg={8}> <InvestmentChart /></Grid>
+
       </Grid>
     </Container>
 
