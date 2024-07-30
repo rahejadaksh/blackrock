@@ -1,9 +1,9 @@
 from flask import Flask, jsonify, request
-from recommendation import *
-import json
-# Import your existing functions
+from flask_cors import CORS  # Import CORS
+from recommendation import *  # Import your existing functions
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 @app.route('/recommendations', methods=['POST'])
 def get_recommendations():

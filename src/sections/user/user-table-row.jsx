@@ -11,16 +11,16 @@ import IconButton from '@mui/material/IconButton';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import { useState } from 'react';
-import TrendChart from './TrendChart';
 
 export default function StockTableRow({
-  selected,
-  ticker,
+  key,
   name,
   currentPrice,
   trend,
-  recommendationScore,
-  handleClick,
+  score,
+  esgScore,
+  selected,
+  handleClick
 }) {
   const [open, setOpen] = useState(null);
 
@@ -32,38 +32,24 @@ export default function StockTableRow({
     setOpen(null);
   };
 
+  const trendStyle = {
+    backgroundColor: trend === 'positive' ? '#4caf50' : '#f44336',
+    color: 'white',
+    borderRadius: '8px',
+    padding: '4px 8px',
+    display: 'inline-block',
+  };
+
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
-        <TableCell padding="checkbox">
-          <Checkbox disableRipple checked={selected} onChange={handleClick} />
-        </TableCell>
-
-        <TableCell component="th" scope="row" padding="none">
-          <Typography variant="subtitle2" noWrap>
-            {ticker}
-          </Typography>
-        </TableCell>
-
-        <TableCell>{name}</TableCell>
-
-        <TableCell align="right">{currentPrice}</TableCell>
-
+        <TableCell align="center">{name}</TableCell>
+        <TableCell align="center">{Math.round(currentPrice)}</TableCell>
         <TableCell align="center">
-         <TrendChart trend="positive" /> {/* Add the chart here */}
+          <span style={trendStyle}>{trend}</span>
         </TableCell>
-
-        <TableCell align="center">
-          <Label color={recommendationScore === 1 ? 'success' : 'error'}>
-            {recommendationScore === 1 ? 'Buy' : 'Sell'}
-          </Label>
-        </TableCell>
-
-        <TableCell align="right">
-          <IconButton onClick={handleOpenMenu}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
-        </TableCell>
+        <TableCell align="center">{score}</TableCell>
+        <TableCell align="center">{Math.round(esgScore)}</TableCell>
       </TableRow>
 
       <Popover
@@ -91,11 +77,12 @@ export default function StockTableRow({
 }
 
 StockTableRow.propTypes = {
-  ticker: PropTypes.string,
+  key: PropTypes.string,
   name: PropTypes.string,
   currentPrice: PropTypes.number,
   trend: PropTypes.string,
-  recommendationScore: PropTypes.number,
+  score: PropTypes.number,
+  esgScore: PropTypes.number,
   selected: PropTypes.bool,
   handleClick: PropTypes.func,
 };
