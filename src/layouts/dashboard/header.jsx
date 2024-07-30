@@ -40,6 +40,15 @@ export default function Header({ onOpenNav }) {
 
       <Stack direction="row" alignItems="center" spacing={1}>
         <LanguagePopover />
+        <Stack direction="row" alignItems="center" spacing={0.5}>
+          <Iconify
+            icon="mdi:coin"
+            width={24}
+            height={24}
+            sx={{ color: '#FFD700' }}  // Yellow color
+          />
+          <span style={{ color: theme.palette.text.secondary }}>100 coins</span>
+        </Stack>
         <NotificationsPopover />
         <AccountPopover />
       </Stack>
