@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import { styled, useTheme } from '@mui/material/styles';
-import { fNumber } from 'src/utils/format-number';
 import Chart, { useChart } from 'src/components/chart';
 
 // ----------------------------------------------------------------------
@@ -24,50 +23,28 @@ const StyledChart = styled(Chart)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function AppCurrentVisits({ title, subheader, chart, ...other }) {
+export default function AppCurrentTrends({ title, subheader, chart, ...other }) {
   const theme = useTheme();
-
-  const { colors, series, options } = chart;
-
-  const chartSeries = series.map((i) => i.value);
+  const { series, colors, categories, options } = chart;
 
   const chartOptions = useChart({
-    chart: {
-      sparkline: {
-        enabled: true,
-      },
-    },
     colors,
-    labels: series.map((i) => i.label),
     stroke: {
-      colors: [theme.palette.background.paper],
+      width: 2,
+    },
+    fill: {
+      opacity: 0.48,
     },
     legend: {
       floating: true,
       position: 'bottom',
       horizontalAlign: 'center',
     },
-    dataLabels: {
-      enabled: true,
-      dropShadow: {
-        enabled: false,
-      },
-    },
-    tooltip: {
-      fillSeriesColor: false,
-      y: {
-        formatter: (value) => fNumber(value),
-        title: {
-          formatter: (seriesName) => `${seriesName}`,
-        },
-      },
-    },
-    plotOptions: {
-      pie: {
-        donut: {
-          labels: {
-            show: false,
-          },
+    xaxis: {
+      categories,
+      labels: {
+        style: {
+          colors: [...Array(categories.length)].map(() => theme.palette.text.secondary),
         },
       },
     },
@@ -77,20 +54,19 @@ export default function AppCurrentVisits({ title, subheader, chart, ...other }) 
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 5 }} />
-
       <StyledChart
         dir="ltr"
-        type="pie"
-        series={chartSeries}
+        type="radar"
+        series={series}
         options={chartOptions}
         width="100%"
-        height={280}
+        height={340}
       />
     </Card>
   );
 }
 
-AppCurrentVisits.propTypes = {
+AppCurrentTrends.propTypes = {
   chart: PropTypes.object,
   subheader: PropTypes.string,
   title: PropTypes.string,

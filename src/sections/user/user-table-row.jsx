@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
@@ -10,20 +8,18 @@ import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
+import { useState } from 'react';
+import TrendChart from './TrendChart';
 
-// ----------------------------------------------------------------------
-
-export default function UserTableRow({
+export default function StockTableRow({
   selected,
+  ticker,
   name,
-  avatarUrl,
-  company,
-  role,
-  isVerified,
-  status,
+  currentPrice,
+  trend,
+  recommendationScore,
   handleClick,
 }) {
   const [open, setOpen] = useState(null);
@@ -44,22 +40,23 @@ export default function UserTableRow({
         </TableCell>
 
         <TableCell component="th" scope="row" padding="none">
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={avatarUrl} />
-            <Typography variant="subtitle2" noWrap>
-              {name}
-            </Typography>
-          </Stack>
+          <Typography variant="subtitle2" noWrap>
+            {ticker}
+          </Typography>
         </TableCell>
 
-        <TableCell>{company}</TableCell>
+        <TableCell>{name}</TableCell>
 
-        <TableCell>{role}</TableCell>
+        <TableCell align="right">{currentPrice}</TableCell>
 
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
+        <TableCell align="center">
+         <TrendChart trend="positive" /> {/* Add the chart here */}
+        </TableCell>
 
-        <TableCell>
-          <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
+        <TableCell align="center">
+          <Label color={recommendationScore === 1 ? 'success' : 'error'}>
+            {recommendationScore === 1 ? 'Buy' : 'Sell'}
+          </Label>
         </TableCell>
 
         <TableCell align="right">
@@ -93,13 +90,12 @@ export default function UserTableRow({
   );
 }
 
-UserTableRow.propTypes = {
-  avatarUrl: PropTypes.any,
-  company: PropTypes.any,
+StockTableRow.propTypes = {
+  ticker: PropTypes.string,
+  name: PropTypes.string,
+  currentPrice: PropTypes.number,
+  trend: PropTypes.string,
+  recommendationScore: PropTypes.number,
+  selected: PropTypes.bool,
   handleClick: PropTypes.func,
-  isVerified: PropTypes.any,
-  name: PropTypes.any,
-  role: PropTypes.any,
-  selected: PropTypes.any,
-  status: PropTypes.string,
 };

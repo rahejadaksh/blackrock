@@ -15,6 +15,7 @@ import AppTrafficBySite from '../app-traffic-by-site';
 import AppCurrentSubject from '../app-current-subject';
 import AppConversionRates from '../app-conversion-rates';
 import AppMarketTrends from '../app-website-visits';
+import AppCurrentTrends from '../AppCurrentTrends';
 
 // ----------------------------------------------------------------------
 
@@ -85,28 +86,43 @@ export default function AppView() {
                   name: 'S&P 500',
                   type: 'line',
                   fill: 'solid',
-                  data: [3750, 3800, 3850, 3900, 3950, 4000, 4050, 4100, 4150, 4200, 4250],
+                  data: [3750, 3720, 3800, 3850, 3700, 3950, 4000, 3850, 4050, 4100, 3950],
                 },
                 {
                   name: 'NASDAQ',
                   type: 'area',
                   fill: 'gradient',
-                  data: [13000, 13100, 13200, 13300, 13400, 13500, 13600, 13700, 13800, 13900, 14000],
+                  data: [13000, 12800, 13100, 13200, 12900, 13300, 13500, 13000, 13600, 13700, 13200],
+                },
+                {
+                  name: 'Dow Jones',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [29000, 29500, 29300, 30000, 29600, 30300, 29900, 30400, 29800, 30600, 30200],
+                },
+                {
+                  name: 'Russell 2000',
+                  type: 'area',
+                  fill: 'gradient',
+                  data: [2000, 1950, 2050, 2100, 1950, 2150, 2200, 2050, 2250, 2300, 2100],
                 },
               ],
             }}
           />
+
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
-          <AppCurrentVisits
-            title="Current Visits"
+          <AppConversionRates
+            title="Trading Types Performance"
+            subheader="(+43%) than last year"
             chart={{
               series: [
-                { label: 'America', value: 4344 },
-                { label: 'Asia', value: 5435 },
-                { label: 'Europe', value: 1443 },
-                { label: 'Africa', value: 4443 },
+                { label: 'Equities', value: 6344 },
+                { label: 'Bonds', value: 4535 },
+                { label: 'Commodities', value: 2434 },
+                { label: 'Real Estate', value: 3243 },
+                { label: 'Forex', value: 5234 },
               ],
             }}
           />
@@ -135,17 +151,20 @@ export default function AppView() {
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
-          <AppCurrentSubject
-            title="Current Subject"
+          <AppCurrentTrends
+            title="Current Market Trends"
+            subheader="(+15%) from last month"
             chart={{
-              categories: ['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math'],
+              categories: ['Technology', 'Finance', 'Healthcare', 'Energy', 'Utilities', 'Consumer Goods'],
               series: [
-                { name: 'Series 1', data: [80, 50, 30, 40, 100, 20] },
-                { name: 'Series 2', data: [20, 30, 40, 80, 20, 80] },
-                { name: 'Series 3', data: [44, 76, 78, 13, 43, 10] },
+                { name: 'Q1 2024', data: [70, 90, 60, 80, 55, 65] },
+      { name: 'Q2 2024', data: [82, 47, 92, 33, 74, 51] },
+      { name: 'Q3 2024', data: [59, 75, 48, 67, 88, 34] },
+      { name: 'Q4 2024', data: [21, 98, 43, 57, 79, 66] },
               ],
             }}
           />
+
         </Grid>
 
         <Grid xs={12} md={6} lg={8}>
