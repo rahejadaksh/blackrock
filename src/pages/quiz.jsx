@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Radio,
@@ -11,7 +10,7 @@ import {
   FormControl,
   LinearProgress,
   FormControlLabel,
-} from "@mui/material";
+} from '@mui/material';
 
 const Quiz = () => {
   // Define the questions with categories
@@ -19,38 +18,48 @@ const Quiz = () => {
     {
       category: 'monthly_expense',
       questions: [
-        { question: "How much do you spend on dining out each month?", options: ["< $100", "$100 - $300", "$300 - $500", "> $500"] },
-        { question: "How much do you spend on entertainment each month?", options: ["< $50", "$50 - $150", "$150 - $300", "> $300"] }
-      ]
+        {
+          question: 'How much do you spend on dining out each month?',
+          options: ['< $100', '$100 - $300', '$300 - $500', '> $500'],
+        },
+      ],
     },
     {
       category: 'monthly_income',
       questions: [
-        { question: "What is your monthly income range?", options: ["< $2000", "$2000 - $4000", "$4000 - $6000", "> $6000"] },
-        { question: "Do you have any additional sources of income?", options: ["No", "Yes, occasional", "Yes, regular", "Yes, substantial"] }
-      ]
+        {
+          question: 'What is your monthly income range?',
+          options: ['< $2000', '$2000 - $4000', '$4000 - $6000', '> $6000'],
+        },
+      ],
     },
     {
       category: 'investment_horizon',
       questions: [
-        { question: "How long do you plan to keep your investments?", options: ["Less than 1 year", "1-3 years", "3-5 years", "More than 5 years"] },
-        { question: "Are you comfortable with long-term investment risks?", options: ["Not at all", "Somewhat", "Moderately", "Very comfortable"] }
-      ]
+        {
+          question: 'How long do you plan to keep your investments?',
+          options: ['Less than 1 year', '1-3 years', '3-5 years', 'More than 5 years'],
+        },
+      ],
     },
     {
       category: 'financial_goals',
       questions: [
-        { question: "What is your primary financial goal?", options: ["Save for retirement", "Buy a house", "Education", "Travel"] },
-        { question: "How important is this goal to you?", options: ["Not important", "Somewhat important", "Very important", "Extremely important"] }
-      ]
+        {
+          question: 'What is your primary financial goal?',
+          options: ['Save for retirement', 'Buy a house', 'Education', 'Travel'],
+        },
+      ],
     },
     {
       category: 'past_investment_experience',
       questions: [
-        { question: "Have you invested in stocks or bonds before?", options: ["No", "A little", "Moderately", "Extensively"] },
-        { question: "How satisfied were you with your past investments?", options: ["Very dissatisfied", "Dissatisfied", "Neutral", "Satisfied"] }
-      ]
-    }
+        {
+          question: 'Have you invested in stocks or bonds before?',
+          options: ['No', 'A little', 'Moderately', 'Extensively'],
+        },
+      ],
+    },
   ];
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -68,7 +77,10 @@ const Quiz = () => {
   };
 
   const handleNextButtonClick = () => {
-    const updatedAnswers = [...userAnswers, { category: currentCategory.category, answer: selectedOption }];
+    const updatedAnswers = [
+      ...userAnswers,
+      { category: currentCategory.category, answer: selectedOption },
+    ];
     setUserAnswers(updatedAnswers);
 
     if (currentQuestionIndex < currentCategory.questions.length - 1) {
@@ -83,7 +95,7 @@ const Quiz = () => {
     }
 
     localStorage.setItem(
-      "quizProgress",
+      'quizProgress',
       JSON.stringify({
         currentCategoryIndex,
         currentQuestionIndex,
@@ -98,11 +110,11 @@ const Quiz = () => {
     setSelectedOption(null);
     setShowResults(false);
     setUserAnswers([]);
-    localStorage.removeItem("quizProgress");
+    localStorage.removeItem('quizProgress');
   };
 
   useEffect(() => {
-    const savedProgress = localStorage.getItem("quizProgress");
+    const savedProgress = localStorage.getItem('quizProgress');
     if (savedProgress) {
       const {
         currentCategoryIndex: savedCategoryIndex,
@@ -119,7 +131,7 @@ const Quiz = () => {
 
   useEffect(() => {
     localStorage.setItem(
-      "quizProgress",
+      'quizProgress',
       JSON.stringify({
         currentCategoryIndex,
         currentQuestionIndex,
@@ -129,11 +141,28 @@ const Quiz = () => {
   }, [currentCategoryIndex, currentQuestionIndex, userAnswers]);
 
   if (showResults) {
-    // Here you can implement mapping logic based on userAnswers
-    // Example: Mapping user based on investment horizon answers
-    const investmentHorizonAnswers = userAnswers.filter(answer => answer.category === 'investment_horizon');
-    const investmentHorizonProfile = investmentHorizonAnswers.some(answer => answer.answer === 'More than 5 years') ? 'Long Horizon' : 'Short Horizon';
-    
+    const getCategoryAnswers = (category) =>
+      userAnswers.filter((answer) => answer.category === category).map((answer) => answer.answer);
+
+    const financialGoalsAnswers = getCategoryAnswers('financial_goals');
+    const pastInvestmentExperienceAnswers = getCategoryAnswers('past_investment_experience');
+    const investmentHorizonAnswers = getCategoryAnswers('investment_horizon');
+
+    const mapFinancialGoals = (answer) => {
+      if (answer === 'Save for retirement' || answer === 'Buy a house') return 'Income';
+      return 'Growth';
+    };
+
+    const mapInvestmentExperience = (answer) => {
+      if (answer === 'No' || answer === 'A little') return 'Newbie';
+      return 'Experienced';
+    };
+
+    const financialGoalsProfile = financialGoalsAnswers.map(mapFinancialGoals).join(', ');
+    const investmentExperienceProfile = pastInvestmentExperienceAnswers
+      .map(mapInvestmentExperience)
+      .join(', ');
+    const investmentHorizonProfile = investmentHorizonAnswers.join(', ');
 
     return (
       <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 4 }}>
@@ -141,8 +170,13 @@ const Quiz = () => {
           Quiz Completed
         </Typography>
         <Typography variant="h6" gutterBottom>
-          Your Investment Horizon Profile: {investmentHorizonProfile}
-          
+          Financial Goals Profile: {financialGoalsProfile}
+        </Typography>
+        <Typography variant="h6" gutterBottom>
+          Investment Experience Profile: {investmentExperienceProfile}
+        </Typography>
+        <Typography variant="h6" gutterBottom>
+          Investment Horizon: {investmentHorizonProfile}
         </Typography>
         <Button
           variant="contained"
@@ -162,7 +196,11 @@ const Quiz = () => {
       <Box sx={{ mb: 4, display: 'flex', justifyContent: 'center' }}>
         <LinearProgress
           variant="determinate"
-          value={(currentCategoryIndex * 100 / quizData.length) + ((currentQuestionIndex + 1) / currentCategory.questions.length * 100 / quizData.length)}
+          value={
+            (currentCategoryIndex * 100) / quizData.length +
+            (((currentQuestionIndex + 1) / currentCategory.questions.length) * 100) /
+              quizData.length
+          }
           sx={{ width: '100%' }}
         />
       </Box>
@@ -176,12 +214,7 @@ const Quiz = () => {
           <FormLabel component="legend">Options</FormLabel>
           <RadioGroup value={selectedOption} onChange={handleOptionChange}>
             {currentQuestion.options.map((option, index) => (
-              <FormControlLabel
-                key={index}
-                value={option}
-                control={<Radio />}
-                label={option}
-              />
+              <FormControlLabel key={index} value={option} control={<Radio />} label={option} />
             ))}
           </RadioGroup>
         </FormControl>

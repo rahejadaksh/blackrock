@@ -30,8 +30,8 @@ export default function AppView() {
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title={t('topPerformer')}
-            total="Bajaj Finance"
+            title={t('activeUsers')}
+            total="453636"
             color="success"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
           />

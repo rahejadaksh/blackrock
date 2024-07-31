@@ -10,6 +10,7 @@ i18n.use(initReactI18next).init({
   resources: {
     en: {
       translation: {
+        activeUsers: 'Active Users',
         welcome: 'Welcome Yuvraj!',
         dashboard: 'Dashboard',
         user: 'User',
@@ -35,7 +36,8 @@ i18n.use(initReactI18next).init({
     },
     hi: {
       translation: {
-        welcome: 'स्वागत हे!',
+        activeUsers: 'सक्रिय उपयोगकर्ता',
+        welcome: 'स्वागत है युवराज!',
         dashboard: 'डैशबोर्ड',
         user: 'उपयोगकर्ता',
         learningCourses: 'लर्निंग कोर्स',
