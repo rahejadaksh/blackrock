@@ -38,11 +38,6 @@ export default function SeeMorePage() {
           See More
         </Typography>
         {/* "Take Quiz" Button */}
-        <Box sx={{ position: 'absolute', top: 0, right: 0 }}>
-          <Button variant="contained" color="primary" size="large">
-            Take Quiz
-          </Button>
-        </Box>
 
         <Typography variant="body1" paragraph sx={{ mt: 8 }}>
           Explore more details with the following videos:

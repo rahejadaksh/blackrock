@@ -5,6 +5,7 @@ import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
 
 import Router from 'src/routes/sections';
 import ThemeProvider from 'src/theme';
+import i18n from './i18n';
 
 // ----------------------------------------------------------------------
 

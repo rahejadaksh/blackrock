@@ -1,11 +1,8 @@
 import { faker } from '@faker-js/faker';
-
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-
 import Iconify from 'src/components/iconify';
-
 import AppTasks from '../app-tasks';
 import AppNewsUpdate from '../app-news-update';
 import AppOrderTimeline from '../app-order-timeline';
@@ -16,20 +13,22 @@ import AppCurrentSubject from '../app-current-subject';
 import AppConversionRates from '../app-conversion-rates';
 import AppMarketTrends from '../app-website-visits';
 import AppCurrentTrends from '../AppCurrentTrends';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
 export default function AppView() {
+  const { t } = useTranslation();
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
-        Hi, Welcome back 👋
+        {t('welcome')}
       </Typography>
 
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Top Performer"
+            title={t('topPerformer')}
             total="Bajaj Finance"
             color="success"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
@@ -38,7 +37,7 @@ export default function AppView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Weekly Volume"
+            title={t('weeklyVolume')}
             total={1352831}
             color="info"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
@@ -47,7 +46,7 @@ export default function AppView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Trading Volume"
+            title={t('tradingVolume')}
             total={4502}
             color="warning"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_buy.png" />}
@@ -56,7 +55,7 @@ export default function AppView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Trade Alerts"
+            title={t('tradeAlerts')}
             total={24}
             color="error"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />}
@@ -65,7 +64,7 @@ export default function AppView() {
 
         <Grid xs={12} md={6} lg={8}>
           <AppMarketTrends
-            title="Market Trends"
+            title={t('marketTrends')}
             subheader="(+10%) from last month"
             chart={{
               labels: [
@@ -92,13 +91,17 @@ export default function AppView() {
                   name: 'NASDAQ',
                   type: 'area',
                   fill: 'gradient',
-                  data: [13000, 12800, 13100, 13200, 12900, 13300, 13500, 13000, 13600, 13700, 13200],
+                  data: [
+                    13000, 12800, 13100, 13200, 12900, 13300, 13500, 13000, 13600, 13700, 13200,
+                  ],
                 },
                 {
                   name: 'Dow Jones',
                   type: 'line',
                   fill: 'solid',
-                  data: [29000, 29500, 29300, 30000, 29600, 30300, 29900, 30400, 29800, 30600, 30200],
+                  data: [
+                    29000, 29500, 29300, 30000, 29600, 30300, 29900, 30400, 29800, 30600, 30200,
+                  ],
                 },
                 {
                   name: 'Russell 2000',
@@ -109,12 +112,11 @@ export default function AppView() {
               ],
             }}
           />
-
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
           <AppConversionRates
-            title="Trading Types Performance"
+            title={t('tradingTypesPerformance')}
             subheader="(+43%) than last year"
             chart={{
               series: [
@@ -130,7 +132,7 @@ export default function AppView() {
 
         <Grid xs={12} md={6} lg={8}>
           <AppConversionRates
-            title="Stock Performance"
+            title={t('stockPerformance')}
             subheader="(+43%) than last year"
             chart={{
               series: [
@@ -147,29 +149,34 @@ export default function AppView() {
               ],
             }}
           />
-
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
           <AppCurrentTrends
-            title="Current Market Trends"
+            title={t('currentMarketTrends')}
             subheader="(+15%) from last month"
             chart={{
-              categories: ['Technology', 'Finance', 'Healthcare', 'Energy', 'Utilities', 'Consumer Goods'],
+              categories: [
+                'Technology',
+                'Finance',
+                'Healthcare',
+                'Energy',
+                'Utilities',
+                'Consumer Goods',
+              ],
               series: [
                 { name: 'Q1 2024', data: [70, 90, 60, 80, 55, 65] },
-      { name: 'Q2 2024', data: [82, 47, 92, 33, 74, 51] },
-      { name: 'Q3 2024', data: [59, 75, 48, 67, 88, 34] },
-      { name: 'Q4 2024', data: [21, 98, 43, 57, 79, 66] },
+                { name: 'Q2 2024', data: [82, 47, 92, 33, 74, 51] },
+                { name: 'Q3 2024', data: [59, 75, 48, 67, 88, 34] },
+                { name: 'Q4 2024', data: [21, 98, 43, 57, 79, 66] },
               ],
             }}
           />
-
         </Grid>
 
         <Grid xs={12} md={6} lg={8}>
           <AppNewsUpdate
-            title="News Update"
+            title={t('newsUpdate')}
             list={[...Array(5)].map((_, index) => ({
               id: faker.string.uuid(),
               title: faker.person.jobTitle(),
@@ -182,7 +189,7 @@ export default function AppView() {
 
         <Grid xs={12} md={6} lg={4}>
           <AppOrderTimeline
-            title="Order Timeline"
+            title={t('orderTimeline')}
             list={[...Array(5)].map((_, index) => ({
               id: faker.string.uuid(),
               title: [
@@ -240,6 +247,5 @@ export default function AppView() {
         </Grid>
       </Grid>
     </Container>
-
   );
 }

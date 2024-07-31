@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -6,6 +7,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 
@@ -16,13 +18,28 @@ import Iconify from 'src/components/iconify';
 import Searchbar from './common/searchbar';
 import { NAV, HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
+import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import LanguagePopover from './common/language-popover';
 import NotificationsPopover from './common/notifications-popover';
+import { useNavigate } from 'react-router-dom';
+import { LANGUAGES } from 'src/constants';
 
 // ----------------------------------------------------------------------
 
 export default function Header({ onOpenNav }) {
   const theme = useTheme();
+  const { i18n } = useTranslation();
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/quiz');
+  };
+
+  const onChangeLang = (e) => {
+    const lang_code = e.target.value;
+    i18n.changeLanguage(lang_code);
+  };
 
   const lgUp = useResponsive('up', 'lg');
 
@@ -39,8 +56,30 @@ export default function Header({ onOpenNav }) {
       <Box sx={{ flexGrow: 1 }} />
 
       <Stack direction="row" alignItems="center" spacing={1}>
-        <LanguagePopover />
-        <NotificationsPopover />
+        <Select
+          labelId="language-selector-label"
+          value={i18n.language}
+          onChange={onChangeLang}
+          label="Language"
+          sx={{ height: '35px' }}
+        >
+          {LANGUAGES.map(({ code, label }) => (
+            <MenuItem key={code} value={code}>
+              {label}
+            </MenuItem>
+          ))}
+        </Select>
+        <Box>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            sx={{ ml: 2, mr: 2 }}
+            onClick={handleClick}
+          >
+            Take Quiz
+          </Button>
+        </Box>
         <AccountPopover />
       </Stack>
     </>
