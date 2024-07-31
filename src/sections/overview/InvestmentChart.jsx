@@ -146,7 +146,7 @@ const InvestmentChart = () => {
   };
 
   return (
-    <Box sx={{ width: '100%', height: '400px', backgroundColor: 'white', padding: '20px', mt: 4 }}>
+    <Box sx={{ width: '100%', height: '400px', backgroundColor: 'white', padding: '20px', mt: 4,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",marginTop:"10px" }} >
       <Typography variant="h6" component="div" gutterBottom>
         {t('esg')}
       </Typography>

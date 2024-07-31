@@ -14,13 +14,10 @@ import { useState } from 'react';
 
 export default function StockTableRow({
   key,
+  rank,
   name,
-  currentPrice,
-  trend,
-  score,
-  esgScore,
-  selected,
-  handleClick
+  interestGenerated,
+  lastUpdated,
 }) {
   const [open, setOpen] = useState(null);
 
@@ -32,24 +29,13 @@ export default function StockTableRow({
     setOpen(null);
   };
 
-  const trendStyle = {
-    backgroundColor: trend === 'positive' ? '#4caf50' : '#f44336',
-    color: 'white',
-    borderRadius: '8px',
-    padding: '4px 8px',
-    display: 'inline-block',
-  };
-
   return (
     <>
-      <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
+      <TableRow hover tabIndex={-1} role="checkbox">
+        <TableCell align="center">{rank}</TableCell>
         <TableCell align="center">{name}</TableCell>
-        <TableCell align="center">{Math.round(currentPrice)}</TableCell>
-        <TableCell align="center">
-          <span style={trendStyle}>{trend}</span>
-        </TableCell>
-        <TableCell align="center">{score}</TableCell>
-        <TableCell align="center">{Math.round(esgScore)}</TableCell>
+        <TableCell align="center">{interestGenerated}</TableCell>
+        <TableCell align="center">{lastUpdated}</TableCell>
       </TableRow>
 
       <Popover
@@ -77,12 +63,9 @@ export default function StockTableRow({
 }
 
 StockTableRow.propTypes = {
-  key: PropTypes.string,
+  key: PropTypes.number,
+  rank: PropTypes.number,
   name: PropTypes.string,
-  currentPrice: PropTypes.number,
-  trend: PropTypes.string,
-  score: PropTypes.number,
-  esgScore: PropTypes.number,
-  selected: PropTypes.bool,
-  handleClick: PropTypes.func,
+  interestGenerated: PropTypes.number,
+  lastUpdated: PropTypes.string,
 };

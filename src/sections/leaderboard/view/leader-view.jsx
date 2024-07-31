@@ -2,18 +2,14 @@ import { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-import CircularProgress from '@mui/material/CircularProgress'; // Import CircularProgress
-import { mockStock } from 'src/_mock/mockData';
+import CircularProgress from '@mui/material/CircularProgress';
 
-import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
-
 import TableNoData from '../table-no-data';
 import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
@@ -21,55 +17,48 @@ import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 import StockTableRow from '../user-table-row';
 
-// Import mock data
+// Mock data
+const mockUsers = [
+  { rank: 1, name: 'Alice', interestGenerated: '12.5%', lastUpdated: '2024-07-28' },
+  { rank: 2, name: 'Bob', interestGenerated: '10.8%', lastUpdated: '2024-07-27' },
+  { rank: 3, name: 'Charlie', interestGenerated: '9.6%', lastUpdated: '2024-07-26' },
+  { rank: 4, name: 'David', interestGenerated: '8.3%', lastUpdated: '2024-07-25' },
+  { rank: 5, name: 'Eve', interestGenerated: '7.4%', lastUpdated: '2024-07-24' },
+  { rank: 6, name: 'Frank', interestGenerated: '7.1%', lastUpdated: '2024-07-23' },
+  { rank: 7, name: 'Grace', interestGenerated: '6.9%', lastUpdated: '2024-07-22' },
+  { rank: 8, name: 'Hank', interestGenerated: '6.5%', lastUpdated: '2024-07-21' },
+  { rank: 9, name: 'Ivy', interestGenerated: '6.3%', lastUpdated: '2024-07-20' },
+  { rank: 10, name: 'Jack', interestGenerated: '6.0%', lastUpdated: '2024-07-19' },
+  { rank: 11, name: 'Kara', interestGenerated: '5.8%', lastUpdated: '2024-07-18' },
+  { rank: 12, name: 'Liam', interestGenerated: '5.5%', lastUpdated: '2024-07-17' },
+  { rank: 13, name: 'Mia', interestGenerated: '5.3%', lastUpdated: '2024-07-16' },
+  { rank: 14, name: 'Nina', interestGenerated: '5.0%', lastUpdated: '2024-07-15' },
+  { rank: 15, name: 'Oscar', interestGenerated: '4.8%', lastUpdated: '2024-07-14' },
+  { rank: 16, name: 'Paul', interestGenerated: '4.5%', lastUpdated: '2024-07-13' },
+  { rank: 17, name: 'Quinn', interestGenerated: '4.3%', lastUpdated: '2024-07-12' },
+  { rank: 18, name: 'Ruth', interestGenerated: '4.0%', lastUpdated: '2024-07-11' },
+  { rank: 19, name: 'Sam', interestGenerated: '3.8%', lastUpdated: '2024-07-10' },
+  { rank: 20, name: 'Tina', interestGenerated: '3.5%', lastUpdated: '2024-07-09' },
+]
 
 // ----------------------------------------------------------------------
 
-export default function StockPage() {
+export default function LeaderView() {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('rank');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [stocks, setStocks] = useState([]); // Use mock data
+  const [users, setUsers] = useState(mockUsers); // Use mock data
   const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
-    const fetchStockRecommendations = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:5000/recommendations', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            user_spending_data: {
-              monthly_income: 5000,
-              monthly_expense: 3000,
-            },
-            user_profile: {
-              investment_horizon: 'long',
-              financial_goals: 'growth',
-              past_investment_experience: 'novice',
-            },
-          }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setStocks(data.top_10_stocks);
-        } else {
-          console.error('Failed to fetch stock recommendations');
-        }
-      } catch (error) {
-        console.error('Error fetching stock recommendations:', error);
-      } finally {
-        setLoading(false); // Set loading to false once data is fetched
-      }
-    };
-
-    fetchStockRecommendations();
+    // Simulate fetching data
+    setTimeout(() => {
+      setUsers(mockUsers); // Use mock data here
+      setLoading(false);
+    }, 1000);
   }, []);
 
   const handleSort = (event, id) => {
@@ -80,18 +69,18 @@ export default function StockPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = stocks.map((n) => n.ticker); // Use ticker for selection
+      const newSelecteds = users.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, ticker) => {
-    const selectedIndex = selected.indexOf(ticker);
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
     let newSelected = [];
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, ticker);
+      newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -120,7 +109,7 @@ export default function StockPage() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: stocks, // Use stocks here
+    inputData: users, // Use users here
     comparator: getComparator(order, orderBy),
     filterName,
   });
@@ -130,11 +119,7 @@ export default function StockPage() {
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Stocks</Typography>
-
-        {/* <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
-          New Stock
-        </Button> */}
+        <Typography variant="h4">Leaderboard</Typography>
       </Stack>
 
       <Card>
@@ -155,16 +140,15 @@ export default function StockPage() {
                 <UserTableHead
                   order={order}
                   orderBy={orderBy}
-                  rowCount={stocks.length} // Use stocks here
+                  rowCount={users.length} // Use users here
                   numSelected={selected.length}
                   onRequestSort={handleSort}
                   onSelectAllClick={handleSelectAllClick}
                   headLabel={[
-                    { id: 'name', label: 'Name' },
-                    { id: 'current_price', label: 'Price' },
-                    { id: 'trend', label: 'Trend', align: 'center' },
-                    { id: 'score', label: 'Recommendation Score' },
-                    { id: 'esg_score.overall', label: 'ESG Score' },
+                    { id: 'rank', label: 'Rank' },
+                    { id: 'name', label: 'User Name' },
+                    { id: 'interestGenerated', label: 'Profit Generated %' },
+                    { id: 'lastUpdated', label: 'Last Updated' },
                     { id: '' },
                   ]}
                 />
@@ -173,20 +157,19 @@ export default function StockPage() {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
                       <StockTableRow
-                        key={row.ticker}
+                        key={row.name}
+                        rank={row.rank}
                         name={row.name}
-                        currentPrice={row.analysis.current_price}
-                        trend={row.analysis.trend}
-                        score={row.score}
-                        esgScore={row.analysis.esg_score.overall}
-                        selected={selected.indexOf(row.ticker) !== -1}
-                        handleClick={(event) => handleClick(event, row.ticker)}
+                        interestGenerated={row.interestGenerated}
+                        lastUpdated={row.lastUpdated}
+                        selected={selected.indexOf(row.name) !== -1}
+                        handleClick={(event) => handleClick(event, row.name)}
                       />
                     ))}
 
                   <TableEmptyRows
                     height={77}
-                    emptyRows={emptyRows(page, rowsPerPage, stocks.length)} // Use stocks here
+                    emptyRows={emptyRows(page, rowsPerPage, users.length)} // Use users here
                   />
 
                   {notFound && <TableNoData query={filterName} />}
@@ -199,7 +182,7 @@ export default function StockPage() {
         <TablePagination
           page={page}
           component="div"
-          count={stocks.length} // Use stocks here
+          count={users.length} // Use users here
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

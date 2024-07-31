@@ -10,7 +10,7 @@ i18n.use(initReactI18next).init({
   resources: {
     en: {
       translation: {
-        welcome: 'Welcome!',
+        welcome: 'Welcome Yuvraj!',
         dashboard: 'Dashboard',
         user: 'User',
         learningCourses: 'Learning Courses',
@@ -28,7 +28,8 @@ i18n.use(initReactI18next).init({
         currentMarketTrends: 'Current Market Trends',
         newsUpdate: 'News Update',
         orderTimeline: 'Order Timeline',
-        esg:'Top ESG Companies,'
+        esg:'Top ESG Companies',
+        leaderboard:'Leaderboard',
         // add other translations as needed
       },
     },
@@ -53,6 +54,7 @@ i18n.use(initReactI18next).init({
         newsUpdate: 'समाचार अपडेट',
         orderTimeline: 'आदेश टाइमलाइन',
         esg:'शीर्ष ईएसजी कंपनियां',
+        leaderboard:'लीडरबोर्ड',
         // add other translations as needed
       },
     },

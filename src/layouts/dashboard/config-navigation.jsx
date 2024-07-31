@@ -27,6 +27,11 @@ const useNavConfig = () => {
       icon: icon('ic_cart'),
     },
     {
+      title: t('leaderboard'),
+      path: '/leader',
+      icon: icon('ic_cart'),
+    },
+    {
       title: t('blog'),
       path: '/blog',
       icon: icon('ic_blog'),
