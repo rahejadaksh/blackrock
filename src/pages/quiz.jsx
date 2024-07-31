@@ -133,6 +133,7 @@ const Quiz = () => {
     // Example: Mapping user based on investment horizon answers
     const investmentHorizonAnswers = userAnswers.filter(answer => answer.category === 'investment_horizon');
     const investmentHorizonProfile = investmentHorizonAnswers.some(answer => answer.answer === 'More than 5 years') ? 'Long Horizon' : 'Short Horizon';
+    
 
     return (
       <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 4 }}>
@@ -141,6 +142,7 @@ const Quiz = () => {
         </Typography>
         <Typography variant="h6" gutterBottom>
           Your Investment Horizon Profile: {investmentHorizonProfile}
+          
         </Typography>
         <Button
           variant="contained"

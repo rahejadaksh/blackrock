@@ -56,6 +56,15 @@ export default function Header({ onOpenNav }) {
       <Box sx={{ flexGrow: 1 }} />
 
       <Stack direction="row" alignItems="center" spacing={1}>
+        <Stack direction="row" alignItems="center" spacing={0.5}>
+          <Iconify
+            icon="mdi:coin"
+            width={24}
+            height={24}
+            sx={{ color: '#FFD700' }}  // Yellow color
+          />
+          <span style={{ color: theme.palette.text.secondary }}>100 coins</span>
+        </Stack>
         <Select
           labelId="language-selector-label"
           value={i18n.language}
