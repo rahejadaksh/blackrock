@@ -28,6 +28,7 @@ i18n.use(initReactI18next).init({
         currentMarketTrends: 'Current Market Trends',
         newsUpdate: 'News Update',
         orderTimeline: 'Order Timeline',
+        esg:'Top ESG Companies,'
         // add other translations as needed
       },
     },
@@ -51,6 +52,7 @@ i18n.use(initReactI18next).init({
         currentMarketTrends: 'वर्तमान बाजार रुझान',
         newsUpdate: 'समाचार अपडेट',
         orderTimeline: 'आदेश टाइमलाइन',
+        esg:'शीर्ष ईएसजी कंपनियां',
         // add other translations as needed
       },
     },

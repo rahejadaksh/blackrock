@@ -11,20 +11,14 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material'; // Import MUI components
 
 // Register components for Chart.js
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const InvestmentChart = () => {
+  const { t } = useTranslation();
   const data = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
     datasets: [
@@ -154,9 +148,12 @@ const InvestmentChart = () => {
   return (
     <Box sx={{ width: '100%', height: '400px', backgroundColor: 'white', padding: '20px', mt: 4 }}>
       <Typography variant="h6" component="div" gutterBottom>
-        Top ESG Investment Companies
+        {t('esg')}
       </Typography>
-      <Line data={data} options={options} />
+      <Line
+        data={data}
+        options={options}
+      />
     </Box>
   );
 };

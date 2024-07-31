@@ -3,10 +3,12 @@ import useFetchNews from 'src/hooks/useFetchNews';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AppNewsUpdate from './app-news-update';
+import { useTranslation } from 'react-i18next';
 
 const NewsContainer = () => {
+  const { t } = useTranslation();
   const [page, setPage] = useState(1);
-  const pageSize = 8;
+  const pageSize = 5;
   const { news, loading, error } = useFetchNews('trading');
   
   if (loading) return <div>Loading...</div>;
@@ -29,7 +31,7 @@ const NewsContainer = () => {
   return (
     <Box>
       <AppNewsUpdate
-        title="Trading News Update"
+        title={t('newsUpdate')}
         list={paginatedNews.map((article) => ({
           id: article.url, // Unique ID for each news item
           title: article.title,

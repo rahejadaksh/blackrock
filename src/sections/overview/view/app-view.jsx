@@ -16,6 +16,7 @@ import AppCurrentTrends from '../AppCurrentTrends';
 import { useTranslation } from 'react-i18next';
 import NewsContainer from '../NewsContainer';
 import InvestmentChart from '../InvestmentChart';
+import { display } from '@mui/system';
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +27,6 @@ export default function AppView() {
       <Typography variant="h4" sx={{ mb: 5 }}>
         {t('welcome')}
       </Typography>
-
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
@@ -132,13 +132,19 @@ export default function AppView() {
           />
         </Grid>
 
-
         <Grid xs={12} md={6} lg={4}>
           <AppCurrentTrends
-            title="Current Market Trends"
+            title={t('currentMarketTrends')}
             subheader="(+15%) from last month"
             chart={{
-              categories: ['Technology', 'Finance', 'Healthcare', 'Energy', 'Utilities', 'Consumer Goods'],
+              categories: [
+                'Technology',
+                'Finance',
+                'Healthcare',
+                'Energy',
+                'Utilities',
+                'Consumer Goods',
+              ],
               series: [
                 { name: 'Q1 2024', data: [70, 90, 60, 80, 55, 65] },
                 { name: 'Q2 2024', data: [82, 47, 92, 33, 74, 51] },
@@ -147,28 +153,9 @@ export default function AppView() {
               ],
             }}
           />
-          <Grid xs={12} md={6} lg={8} mt={6}>
-            <AppConversionRates
-              title="Stock Performance"
-              subheader="(+43%) than last year"
-              chart={{
-                series: [
-                  { label: 'Apple (AAPL)', value: 400 },
-                  { label: 'Microsoft (MSFT)', value: 430 },
-                  { label: 'Amazon (AMZN)', value: 448 },
-                  { label: 'Google (GOOGL)', value: 470 },
-                  { label: 'Facebook (META)', value: 540 },
-                  { label: 'Tesla (TSLA)', value: 580 },
-                  { label: 'Netflix (NFLX)', value: 690 },
-                  { label: 'NVIDIA (NVDA)', value: 1100 },
-                  { label: 'Adobe (ADBE)', value: 1200 },
-                  { label: 'Salesforce (CRM)', value: 1380 },
-                ],
-              }}
-            />
-          </Grid>
+        </Grid>
 
-        <Grid xs={12} md={6} lg={8}>
+        <Grid xs={12} md={6} lg={8} mt={6}>
           <AppConversionRates
             title={t('stockPerformance')}
             subheader="(+43%) than last year"
@@ -214,78 +201,11 @@ export default function AppView() {
 
         <Grid xs={12} md={6} lg={8}>
           <NewsContainer />
-          <AppNewsUpdate
-            title={t('newsUpdate')}
-            list={[...Array(5)].map((_, index) => ({
-              id: faker.string.uuid(),
-              title: faker.person.jobTitle(),
-              description: faker.commerce.productDescription(),
-              image: `/assets/images/covers/cover_${index + 1}.jpg`,
-              postedAt: faker.date.recent(),
-            }))}
-          />
         </Grid>
 
-        {/* <Grid xs={12} md={6} lg={4}>
-          <AppOrderTimeline
-            title={t('orderTimeline')}
-            list={[...Array(5)].map((_, index) => ({
-              id: faker.string.uuid(),
-              title: [
-                '1983, orders, $4220',
-                '12 Invoices have been paid',
-                'Order #37745 from September',
-                'New order placed #XF-2356',
-                'New order placed #XF-2346',
-              ][index],
-              type: `order${index + 1}`,
-              time: faker.date.past(),
-            }))}
-          />
-        </Grid> */}
-
-        {/* <Grid xs={12} md={6} lg={4}>
-          <AppTrafficBySite
-            title="Traffic by Site"
-            list={[
-              {
-                name: 'FaceBook',
-                value: 323234,
-                icon: <Iconify icon="eva:facebook-fill" color="#1877F2" width={32} />,
-              },
-              {
-                name: 'Google',
-                value: 341212,
-                icon: <Iconify icon="eva:google-fill" color="#DF3E30" width={32} />,
-              },
-              {
-                name: 'Linkedin',
-                value: 411213,
-                icon: <Iconify icon="eva:linkedin-fill" color="#006097" width={32} />,
-              },
-              {
-                name: 'Twitter',
-                value: 443232,
-                icon: <Iconify icon="eva:twitter-fill" color="#1C9CEA" width={32} />,
-              },
-            ]}
-          />
-        </Grid> */}
-
-        {/* <Grid xs={12} md={6} lg={8}>
-          <AppTasks
-            title="Tasks"
-            list={[
-              { id: '1', name: 'Create FireStone Logo' },
-              { id: '2', name: 'Add SCSS and JS files if required' },
-              { id: '3', name: 'Stakeholder Meeting' },
-              { id: '4', name: 'Scoping & Estimations' },
-              { id: '5', name: 'Sprint Showcase' },
-            ]}
-          />
-        </Grid> */}
-        <Grid xs={12} md={6} lg={8}> <InvestmentChart /></Grid>
-
+        <Grid xs={12} md={12} lg={12}>
+          <InvestmentChart/>
+        </Grid>
       </Grid>
     </Container>
   );
